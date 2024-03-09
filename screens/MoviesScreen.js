@@ -14,7 +14,7 @@ const MoviesScreen = () => {
   const fetchData = async () => {
     try {
       const { movies: newMovies } = await fetchMoviesAndTVShows(page);
-      // Append the page number to each movie ID to ensure uniqueness
+
       const moviesWithUniqueKeys = newMovies.map(movie => ({ ...movie, uniqueKey: `${movie.id}_${page}` }));
       setMovies(prevMovies => [...prevMovies, ...moviesWithUniqueKeys]);
     } catch (error) {
@@ -61,10 +61,16 @@ const styles = StyleSheet.create({
     backgroundColor: 'black',
   },
   heading: {
-    fontSize: 46,
+    fontSize: 40,
     fontWeight: 'bold',
     marginBottom: 10,
     color: 'white',
+    paddingHorizontal: 20, 
+    paddingVertical: 2, 
+    backgroundColor: '#9d0208',
+    borderColor: '#d9d9d9', 
+    borderWidth: 1.5, 
+    borderRadius: 16, 
   },
   moviesContainer: {
     flexDirection: 'row',
@@ -73,7 +79,7 @@ const styles = StyleSheet.create({
   },
   card: {
     backgroundColor: '#f0f0f0',
-    borderRadius: 8,
+    borderRadius: 16,
     margin: 10,
     alignItems: 'center',
     position: 'relative',
@@ -84,7 +90,7 @@ const styles = StyleSheet.create({
     width: 150,
     height: 250, 
     marginBottom: 10,
-    borderRadius: 8,
+    borderRadius: 16,
   },
   overlay: {
     ...StyleSheet.absoluteFillObject,
@@ -105,6 +111,7 @@ const styles = StyleSheet.create({
   button:{
     textAlign: 'center',
     justifyContent: 'center',
+    backgroundColor: '#131112',
     borderColor: 'white',
     paddingHorizontal:30,
     paddingVertical: 10,

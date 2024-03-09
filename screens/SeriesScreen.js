@@ -13,7 +13,7 @@ const SeriesScreen = () => {
   const fetchData = async () => {
     try {
       const { tvShows: newTVShows } = await fetchMoviesAndTVShows(page);
-      // Append the page number to each TV show ID to ensure uniqueness
+
       const tvShowsWithUniqueKeys = newTVShows.map(show => ({ ...show, uniqueKey: `${show.id}_${page}` }));
       setTVShows(prevTVShows => [...prevTVShows, ...tvShowsWithUniqueKeys]);
     } catch (error) {
@@ -59,10 +59,16 @@ const styles = StyleSheet.create({
     backgroundColor: 'black',
   },
   heading: {
-    fontSize: 46,
+    fontSize: 40,
     fontWeight: 'bold',
     marginBottom: 10,
     color: 'white',
+    paddingHorizontal: 20, 
+    paddingVertical: 2, 
+    backgroundColor: '#9d0208',
+    borderColor: '#d9d9d9', 
+    borderWidth: 1.5, 
+    borderRadius: 16, 
   },
   showsContainer: {
     flexDirection: 'row',
@@ -71,18 +77,18 @@ const styles = StyleSheet.create({
   },
   card: {
     backgroundColor: '#f0f0f0',
-    borderRadius: 8,
+    borderRadius: 16,
     margin: 10,
     alignItems: 'center',
     position: 'relative',
     width: 150,
-    height: 250,
+    height: 250, 
   },
   poster: {
     width: 150,
-    height: 250,
+    height: 250, 
     marginBottom: 10,
-    borderRadius: 8,
+    borderRadius: 16,
   },
   overlay: {
     ...StyleSheet.absoluteFillObject,

@@ -9,6 +9,15 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Login from './screens/LoginScreen';
 import { User, onAuthStateChanged } from 'firebase/auth'; 
 import { FIREBASE_AUTH } from './firebaseConfig';
+import { LogBox } from 'react-native';
+
+
+LogBox.ignoreLogs([
+  'Warning: ...', 
+]);
+
+
+LogBox.ignoreAllLogs();
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -16,7 +25,7 @@ function InsideLayout() {
   return (
     <Tab.Navigator
       screenOptions={{
-        tabBarActiveTintColor: 'white',
+        tabBarActiveTintColor: '#cd1d27',
         tabBarInactiveTintColor: 'gray',
         tabBarLabelStyle: {
           fontSize: 16,
@@ -24,7 +33,8 @@ function InsideLayout() {
         },
         tabBarStyle: {
           display: 'flex',
-          backgroundColor: 'black',
+          backgroundColor: '#131112',
+          borderColor: '#131112',
         },
       }}
     >
@@ -52,7 +62,7 @@ function InsideLayout() {
   );
 }
 
-const App = () => {
+const App = () => { 
   const [user, setUser] = useState(null)
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(FIREBASE_AUTH, (user) => {

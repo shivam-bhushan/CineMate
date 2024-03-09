@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, KeyboardAvoidingView } from 'react-native';
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
 import { FIREBASE_AUTH } from '../firebaseConfig';
-import { signInWithEmailAndPassword, createUserWithEmailAndPassword}from 'firebase/auth'
 
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
-  const [user, setUser] = useState(null); 
+  const [error, setError] = useState('');
 
   const auth = FIREBASE_AUTH;
 
@@ -16,10 +16,9 @@ const Login = ({ navigation }) => {
     try {
       const response = await signInWithEmailAndPassword(auth, email, password);
       console.log(response);
-      setUser(response.user); // Update the user state
     } catch (error) {
       console.log(error);
-      alert('Sign in failed: ' + error.message);
+      setError('Sign in failed: ' + error.message);
     } finally {
       setLoading(false);
     }
@@ -30,37 +29,45 @@ const Login = ({ navigation }) => {
     try {
       const response = await createUserWithEmailAndPassword(auth, email, password);
       console.log(response);
-      setUser(response.user); // Update the user state
     } catch (error) {
       console.log(error);
-      alert('Sign up failed: ' + error.message);
+      setError('Sign up failed: ' + error.message);
     } finally {
       setLoading(false);
     }
   };
-  
-  
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Login</Text>
+
+
+      <Image
+        source={require('../assets/logo.png')} 
+        style={styles.logo}
+        />      
       <TextInput
         style={styles.input}
         placeholder="Email"
         value={email}
-        onChangeText={(text) =>setEmail(text)}
+        onChangeText={setEmail}
         keyboardType="email-address"
         autoCapitalize="none"
-      />
+        />
       <TextInput
         style={styles.input}
         placeholder="Password"
         value={password}
-        onChangeText={(text) =>setPassword(text)}
-        secureTextEntry= {true}
-      />
-      <Button title="Login" onPress={signIn} />
-      <Button title="Sign up" onPress={signUp} />
+        onChangeText={setPassword}
+        secureTextEntry={true}
+        />
+      {error ? <Text style={styles.errorText}>{error}</Text> : null}
+      <TouchableOpacity style={styles.button} onPress={signIn}>
+        <Text style={styles.buttonText}>Login</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.button} onPress={signUp}>
+        <Text style={styles.buttonText}>Sign up</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -70,21 +77,48 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#fff',
+    backgroundColor: 'black',
   },
-  title: {
-    fontSize: 24,
+  heading: {
+    fontSize: 40,
+    fontWeight: '700',
     marginBottom: 20,
+    color: 'white',
+  },
+  logo: {
+    width: 200, 
+    height: 200, 
+    marginBottom: 0,
   },
   input: {
     width: '80%',
-    height: 40,
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 5,
-    marginBottom: 10,
+    height: 50,
+    borderWidth: 2,
+    borderColor: '#7b1c26',
+    borderRadius: 12,
+    marginBottom: 20,
     paddingHorizontal: 10,
+    color: '#d9d9d9',
   },
+  button: {
+    backgroundColor: '#cd1d27',
+    width: '80%',
+    height: 50,
+    borderRadius: 12,
+    marginBottom: 15,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  buttonText: {
+    color: '#d9d9d9',
+    fontWeight: '500',
+    fontSize: 18,
+  },
+  errorText: {
+    color: 'red',
+    marginBottom: 20,
+  },
+  
 });
 
 export default Login;

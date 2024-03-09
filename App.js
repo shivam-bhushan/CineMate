@@ -1,20 +1,46 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import MoviesScreen from './screens/MoviesScreen';
+import SeriesScreen from './screens/SeriesScreen';
+import { SafeAreaView } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 
-export default function App() {
+const Tab = createBottomTabNavigator();
+
+const App = () => {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+    <SafeAreaView style={{ flex: 1 }}> 
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+    <NavigationContainer>
+      <Tab.Navigator
+        screenOptions={{
+          
+          tabBarActiveTintColor: 'white',
+          tabBarInactiveTintColor: 'gray',
+          tabBarLabelStyle: {
+            fontSize: 16,
+            fontWeight: 'bold',
+          },
+          tabBarStyle: {
+            display: 'flex',
+            backgroundColor: 'black'
+          },
+        }}
+      >
+        <Tab.Screen name="Movies" component={MoviesScreen} options={{headerShown: false, tabBarIcon: ({ color, size }) => (
+        <Ionicons name="film" color={color} size={24} />
+      ),}}/>
+        <Tab.Screen name="Series" component={SeriesScreen} options={{  headerShown: false, tabBarIcon: ({ color, size }) => (
+        <Ionicons name="tv" color={color} size={24} />
+      ),}}/>
+      </Tab.Navigator>
+    </NavigationContainer>
+    </SafeAreaView>
+
+  );
+};
+
+export default App;
+
+//BA:7D:D5:14:3E:4C:BD:A9:68:A7:B2:0B:56:BF:23:3E:A0:4D:F1:C9  SHA1

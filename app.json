@@ -24,7 +24,7 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.shivambhushan13.CineMate",
-      "googleServicesFile": "./android/app/google-services.json"
+      "googleServicesFile": "./google-services.json"
     },
     "web": {
       "favicon": "./assets/favicon.png"

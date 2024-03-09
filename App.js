@@ -1,46 +1,80 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MoviesScreen from './screens/MoviesScreen';
 import SeriesScreen from './screens/SeriesScreen';
 import { SafeAreaView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { createStackNavigator } from '@react-navigation/stack';
+import Login from './screens/LoginScreen';
+import { User, onAuthStateChanged } from 'firebase/auth'; 
+import { FIREBASE_AUTH } from './firebaseConfig';
 
 const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
+function InsideLayout() {
+  return (
+    <Tab.Navigator
+      screenOptions={{
+        tabBarActiveTintColor: 'white',
+        tabBarInactiveTintColor: 'gray',
+        tabBarLabelStyle: {
+          fontSize: 16,
+          fontWeight: 'bold',
+        },
+        tabBarStyle: {
+          display: 'flex',
+          backgroundColor: 'black',
+        },
+      }}
+    >
+      <Tab.Screen
+        name="Movies"
+        component={MoviesScreen}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="film" color={color} size={24} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Series"
+        component={SeriesScreen}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="tv" color={color} size={24} />
+          ),
+        }}
+      />
+    </Tab.Navigator>
+  );
+}
 
 const App = () => {
+  const [user, setUser] = useState(null)
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(FIREBASE_AUTH, (user) => {
+      setUser(user);
+    });
+    return () => unsubscribe();
+  }, []);
   return (
-    <SafeAreaView style={{ flex: 1 }}> 
-
     <NavigationContainer>
-      <Tab.Navigator
+      <Stack.Navigator
         screenOptions={{
-          
-          tabBarActiveTintColor: 'white',
-          tabBarInactiveTintColor: 'gray',
-          tabBarLabelStyle: {
-            fontSize: 16,
-            fontWeight: 'bold',
-          },
-          tabBarStyle: {
-            display: 'flex',
-            backgroundColor: 'black'
-          },
+          headerShown: false,
         }}
       >
-        <Tab.Screen name="Movies" component={MoviesScreen} options={{headerShown: false, tabBarIcon: ({ color, size }) => (
-        <Ionicons name="film" color={color} size={24} />
-      ),}}/>
-        <Tab.Screen name="Series" component={SeriesScreen} options={{  headerShown: false, tabBarIcon: ({ color, size }) => (
-        <Ionicons name="tv" color={color} size={24} />
-      ),}}/>
-      </Tab.Navigator>
+        {user ? (
+          <Stack.Screen name="InsideStack" component={InsideLayout} />
+        ) : (
+          <Stack.Screen name="Login" component={Login} />
+        )}
+      </Stack.Navigator>
     </NavigationContainer>
-    </SafeAreaView>
-
   );
 };
 
 export default App;
-
-//BA:7D:D5:14:3E:4C:BD:A9:68:A7:B2:0B:56:BF:23:3E:A0:4D:F1:C9  SHA1

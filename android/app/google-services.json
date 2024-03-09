@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "340035324609",
+    "project_id": "cinemate1-33ed2",
+    "storage_bucket": "cinemate1-33ed2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:340035324609:android:bc5c90f1611c7544c02240",
+        "android_client_info": {
+          "package_name": "com.shivambhushan13.CineMate"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAOov_o_vNEwa8xgWB9Fdeugu0xe1Kr9pk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

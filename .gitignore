@@ -29,7 +29,7 @@ yarn-error.*
 *.pem
 
 # local env files
-.env*.local
+.env
 
 # typescript
 *.tsbuildinfo
@@ -38,5 +38,3 @@ yarn-error.*
 .expo
 dist/
 web-build/
-
-.env

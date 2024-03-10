@@ -1,15 +1,12 @@
+// tmdbService.js
+import { API_TOKEN } from '@env';
+
 const fetchMoviesAndTVShows = async (page) => {
-  const apiKey = process.env.TMDB_API_KEY; // Retrieve API key from environment variable
-
-  if (!apiKey) {
-    throw new Error('API key not found. Please provide a valid TMDB API key.');
-  }
-
   const options = {
     method: 'GET',
     headers: {
       accept: 'application/json',
-      Authorization: `Bearer ${apiKey}`
+      Authorization: `Bearer ${API_TOKEN}`
     }
   };
 

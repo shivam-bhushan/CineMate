@@ -1,4 +1,4 @@
-# Project Title
+# CineMate
 Movie database application built using React Native, Firebase and TMDB API.
 
 
